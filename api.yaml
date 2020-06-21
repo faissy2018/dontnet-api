@@ -1,0 +1,45 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: idsmobilecoreapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: idsmobilecoreapi
+  template:
+    metadata:
+      labels:
+        app: idsmobilecoreapi
+    spec:
+      containers:
+      - name: idsmobilecoreapi
+        image: faisal2018/apiasp
+        resources:
+          limits:
+            memory: "500Mi"
+            cpu: "500m"
+        ports:
+          - containerPort: 80
+        volumeMounts:
+          - mountPath: /app
+            name: idsmobilecoreapi-data
+      volumes:
+        - name: idsmobilecoreapi-data
+          persistentVolumeClaim:
+            claimName: idsmobilecoreapi-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: idsmobilecoreapi
+spec:
+  externalIPs:
+  -  192.168.1.110
+  ports:
+    - name: http-port
+      port: 80
+      targetPort: 80
+  selector:
+    app: idsmobilecoreapi
+  type: LoadBalancer
