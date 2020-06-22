@@ -1,3 +1,36 @@
+#PersistentVolume
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: idsmobilecoreapi-pv
+  labels:
+    type: local
+    app: idsmobilecoreapi
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 500M
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/mnt/oodata/"
+---
+#PersistentVolumeClaim
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: idsmobilecoreapi-pvc
+  labels:
+    app: idsmobilecoreapi
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 500M
+---
+
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
