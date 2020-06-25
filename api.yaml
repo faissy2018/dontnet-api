@@ -47,7 +47,7 @@ spec:
     spec:
       containers:
       - name: idsmobilecoreapi
-        image: faisal2018/apiasp
+        image: $DOCKER_IMAGE_NAME:$BUILD_NUMBER
         resources:
           limits:
             memory: "500Mi"
